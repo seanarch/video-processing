@@ -7,24 +7,24 @@ metadata:
 spec:
   replicas: 2
   selector:
-    mathLabels:
+    matchLabels:
       app: auth
-    strategy:
-      type: RollingUpdate
-      rollingupdate:
-        maxSurge: 3
-    template:
-      metadata:
-        labels:
-          app: auth
-      spec:
-        containers:
-          - name: auth
-            image: seanzhu/auth
-            ports:
-              - containerPort: 5000
-            envFrom:
-              - configMapRef:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: seanzhu/auth
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
                 name: auth-configmap
-              - secretRef:
+            - secretRef:
                 name: auth-secret
